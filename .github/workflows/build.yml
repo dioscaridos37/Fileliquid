@@ -16,13 +16,12 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - uses: android-actions/setup-android@v3
-
       - name: Install Android 17 (API 37) SDK
         run: |
-          yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager "platforms;android-37.0" "build-tools;37.0.0" \
-            || sdkmanager "platforms;android-37" "build-tools;37.0.0" \
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" "platforms;android-37.0" "build-tools;37.0.0" \
+            || "$SDKM" "platforms;android-37" "build-tools;37.0.0" \
             || echo "SDK 37 будет докачан самим Gradle"
 
       - uses: gradle/actions/setup-gradle@v4
